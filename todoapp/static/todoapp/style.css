@@ -1,0 +1,32 @@
+/* header classes */
+.header-container {
+    margin: 0;
+    padding: 0;
+    height: 100px;
+    width: 100%;
+    background-color: #27232e;
+    background-position: center center;
+    background-image: url('header.jpg');
+    background-attachment: fixed;
+}
+
+/* navbar classes */
+.font-lato-bold {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+}
+
+.font-lato-regular {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+}
+
+.brand-logo {
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+/* body classes */
+.body-bg-color {
+    background-color: #7b7586;
+}
