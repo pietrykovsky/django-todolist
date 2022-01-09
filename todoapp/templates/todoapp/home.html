@@ -1,2 +1,14 @@
 {% extends 'todoapp/base.html' %}
 {% block title %}Home{% endblock %}
+
+{% block main %}
+    <main>
+        <ul>
+            {% for item in task %}
+                <li>{{ item }}</li>
+                {% empty %}
+                <p>You have no tasks.</p>
+            {% endfor %}
+        </ul>
+    </main>
+{% endblock %}
