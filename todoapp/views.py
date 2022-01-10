@@ -1,16 +1,13 @@
-from django import template
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from .forms import UserForm
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from .forms import UserForm, TaskForm
 from django.views.generic import ListView
 from .models import Task
+from django.urls import reverse_lazy
+
 
 # Create your views here.
-def home(request):
-    template = loader.get_template('todoapp/home.html')
-    return HttpResponse(template.render({},request))
-
 def about(request):
     template = loader.get_template('todoapp/about.html')
     return HttpResponse(template.render({},request))
@@ -22,16 +19,21 @@ def contact(request):
 class TaskListView(ListView):
     model = Task
     template_name = 'todoapp/home.html'
-    context_object_name = 'task'
+    context_object_name = 'tasks'
 
-# class UserFormView(View):
-#     form_class = UserForm
-#     template_name = 'todoapp/login'
+class TaskCreateView(CreateView):
+    model = Task
+    template_name = 'todoapp/task-form.html'
+    fields = ['title']
+    context_obect_name = 'tasks'
+    success_url = reverse_lazy('home')
 
-#     def get(self, request):
-#         form = self.form_class(None)
-#         context = {'form': form}
-#         return render(request, self.template_name, context)
+class TaskEditView(UpdateView):
+    model = Task
+    template_name = 'todoapp/task-form.html'
+    fields = ['title']
+    context_obect_name = 'tasks'
+    success_url = reverse_lazy('home')
 
-#     def post(self, request):
-#         pass
+class TaskDelete(DeleteView):
+    pass

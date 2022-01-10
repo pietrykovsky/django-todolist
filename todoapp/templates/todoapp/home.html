@@ -3,9 +3,10 @@
 
 {% block main %}
     <main>
+        <a href="{% url 'create-task' %}"><button>Create new task</button></a>
         <ul>
-            {% for item in task %}
-                <li>{{ item }}</li>
+            {% for task in tasks %}
+                <li>{{ task_form.is_complete }} {{ task.title }} {{ task.pub_date }} <a href="{% url 'edit-task' task.id %}"><button>Edit</button></a></li>
                 {% empty %}
                 <p>You have no tasks.</p>
             {% endfor %}
