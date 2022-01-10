@@ -1,0 +1,11 @@
+{% extends 'todoapp/base.html' %}
+{% block title %}Task edit{% endblock %}
+
+{% block main %}
+    <main>
+        <form method="post"> {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">submit</button>
+        </form>
+    </main>
+{% endblock %}

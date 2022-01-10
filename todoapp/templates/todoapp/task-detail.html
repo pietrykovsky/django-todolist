@@ -1,0 +1,9 @@
+{% extends 'todoapp/base.html' %}
+{% block title %}Task - {{task.id}}{% endblock %}
+
+{% block main %}
+    <main>
+        <h1>{{ task.title }}</h1>
+        <p>{{ task.pub_date }}</p>
+    </main>
+{% endblock %}

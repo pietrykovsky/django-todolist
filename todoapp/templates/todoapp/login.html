@@ -1,0 +1,43 @@
+{% extends 'todoapp/base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block main %}
+<!-- finish styilng!!! -->
+<main class="container-fluid p-2">
+    <div class="container-fluid row justify-content-center align-items-center">
+        <div class="col-md-4">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
+                    {{ form.username }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="{{ form.password.id_for_label }}">Password</label>
+                    {{ form.password }}
+                </div>
+                <button type="submit" class="btn btn-dark">Login</button>
+                <div>
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </form>
+            <div>
+                <p>Don't have an account? <a href="{% url 'register' %}"><button class="btn btn-dark">Sign in</button></a></p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

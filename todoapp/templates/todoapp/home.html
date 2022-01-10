@@ -3,13 +3,25 @@
 
 {% block main %}
     <main>
-        <a href="{% url 'create-task' %}"><button>Create new task</button></a>
+        {% if request.user.is_authenticated %}
+        <form method="post"> {% csrf_token %}
+            {{ form.title }}
+            <button type="submit">add</button>
+        </form>
         <ul>
             {% for task in tasks %}
-                <li>{{ task_form.is_complete }} {{ task.title }} {{ task.pub_date }} <a href="{% url 'edit-task' task.id %}"><button>Edit</button></a></li>
-                {% empty %}
+                <li>
+                    {{ task.title }}
+                    <a href="{% url 'task-detail' task.id %}"><button>detail</button></a>
+                    <a href="{% url 'task-edit' task.id %}"><button>edit</button></a>
+                    <form action="{% url 'task-delete' task.id %}" method="post">{% csrf_token %}<button type="submit">delete</button></form>
+                </li>
+            {% empty %}
                 <p>You have no tasks.</p>
             {% endfor %}
         </ul>
+        {% else %}
+            <h1>Please log in.</h1>
+        {% endif %}
     </main>
 {% endblock %}
