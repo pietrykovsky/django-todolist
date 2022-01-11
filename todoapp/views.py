@@ -13,9 +13,14 @@ from .models import Task
 from .forms import TaskForm
 
 # Create your views here.
+
+# main view with post and get methods
+# on post sending data of task to database
+# on get rendering home template
 class HomeView(LoginRequiredMixin, View):
     template_name = 'todoapp/home.html'
     http_methods_names = ['get', 'post']
+
     def get(self, request):
         form = TaskForm()
         if request.user.is_authenticated:
@@ -25,7 +30,6 @@ class HomeView(LoginRequiredMixin, View):
         context = {'form': form, 'tasks': tasks}
         return render(request, self.template_name, context)
 
-    # @login_required
     def post(self, request):
         form = TaskForm(request.POST)
 
@@ -36,10 +40,12 @@ class HomeView(LoginRequiredMixin, View):
 
         return redirect(reverse('home'))
 
+
 class TaskDetailView(LoginRequiredMixin ,DetailView):
     model = Task
     context_object_name = 'task'
     template_name = 'todoapp/task-detail.html'
+
 
 class TaskEditView(LoginRequiredMixin ,UpdateView):
     model = Task
@@ -48,12 +54,15 @@ class TaskEditView(LoginRequiredMixin ,UpdateView):
     template_name = 'todoapp/task-edit.html'
     success_url = reverse_lazy('home')
 
+
 class TaskDeleteView(LoginRequiredMixin ,DeleteView):
     model = Task
     success_url = reverse_lazy('home')
 
+    # overiding get method not to confirming deletion of task
     def get(self, request):
         return self.post(request)
+
 
 class LoginView(LoginView):
     template_name = 'todoapp/login.html'
@@ -62,6 +71,7 @@ class LoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('home')
+
 
 class RegisterView(FormView):
     template_name = 'todoapp/register.html'
