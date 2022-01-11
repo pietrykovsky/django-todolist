@@ -1,27 +1,73 @@
 {% extends 'todoapp/base.html' %}
 {% block title %}Home{% endblock %}
 
-{% block main %}
-    <main>
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 pb-4 border-bottom">
+    <div class="ms-3">
+        <h4 class="text-uppercase fw-weight-bold mb-0">Welcome {{ request.user }}</h4>
+        <p class="text-gray fst-italic mb-0">What do you want to do?</p>
+    </div>
+    <div class="ms-3">
         {% if request.user.is_authenticated %}
-        <form method="post"> {% csrf_token %}
-            {{ form.title }}
-            <button type="submit">add</button>
-        </form>
-        <ul>
-            {% for task in tasks %}
-                <li>
-                    {{ task.title }}
-                    <a href="{% url 'task-detail' task.id %}"><button>detail</button></a>
-                    <a href="{% url 'task-edit' task.id %}"><button>edit</button></a>
-                    <form action="{% url 'task-delete' task.id %}" method="post">{% csrf_token %}<button type="submit">delete</button></form>
-                </li>
-            {% empty %}
-                <p>You have no tasks.</p>
-            {% endfor %}
-        </ul>
+            <a href="{% url 'logout' %}"><button class="btn btn-primary">Logout</button></a>
         {% else %}
-            <h1>Please log in.</h1>
+            <a href="{% url 'login' %}"><button class="btn btn-primary">Login</button></a>
         {% endif %}
-    </main>
+    </div>
+</div>
+
+<div class="justify-content-center align-items-center mb-4 pb-4 border-bottom">
+    <div class="ms-3">
+        <form class="form-group" method="post"> {% csrf_token %}
+            <div class="input-group">
+                <input class="form-control" type="{{form.title.type}}" name="{{form.title.name}}" id="{{form.title.id}}" placeholder="Your task">
+                <div class="input-group-btn">
+                    <button class="btn btn-outline-secondary" type="submit">Add</button>
+                </div>
+            </div>
+            <div>
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- task list -->
+{% for task in tasks %}
+<div class="d-flex justify-content-between align-items-center mb-2 pb-2">
+    <div class="ms-3">
+        {% if task.is_complete %}
+            <s class="fst-italic pl-1">{{ task.title }}</s>
+        {% else %}
+            <a href="{% url 'task-detail' task.id %}" class="fst-italic pl-1">{{ task.title }}</a>
+        {% endif %}
+    </div>
+    <div class="ms-3">
+        <form method="post" action="{% url 'task-delete' task.id %}"> {% csrf_token %}
+            <div class="btn-group">
+                <a href="{% url 'task-edit' task.id %}"><button type="button" class="btn btn-outline-secondary">Edit</button></a>
+                <button type="submit" class="btn btn-danger">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% empty %}
+        <span class="fst-italic pl-1">You have no tasks.</span>
+{% endfor %}
+
 {% endblock %}

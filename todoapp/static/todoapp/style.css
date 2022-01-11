@@ -1,32 +1,21 @@
-/* header classes */
-.header-container {
-    margin: 0;
-    padding: 0;
-    height: 100px;
-    width: 100%;
-    background-color: #27232e;
-    background-position: center center;
-    background-image: url('header.jpg');
-    background-attachment: fixed;
-}
-
-/* navbar classes */
-.font-lato-bold {
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-}
-
-.font-lato-regular {
-    font-family: 'Lato', sans-serif;
+body {
+    font-family: Lato;
     font-weight: 400;
 }
 
-.brand-logo {
-    font-size: 14px;
-    letter-spacing: 2px;
+.holder {
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #2f3fcc, #e45146);
 }
 
-/* body classes */
-.body-bg-color {
-    background-color: #7b7586;
+.rounded {
+    border-radius: 1rem !important;
+}
+
+.text-gray {
+    color: #aaa;
+}
+
+a {
+    text-decoration: none;
 }

@@ -19,51 +19,34 @@
     
     <title>{% block title %}title{% endblock %}</title>
 </head>
-<body class="body-bg-color">
-    <!-- header -->
-    <header class="header-container">
-    </header>
+<body>
+    <div class="holder d-flex align-items-center justify-content-center">
     
-    <!-- navbar -->
-    <nav id="main-navbar" class="navbar navbar-expand-md navbar-dark bg-dark font-lato-regular">
-        <div class="container-fluid">
-            <a href="{% url 'home' %}" class="navbar-brand text-uppercase px-4 font-lato-bold brand-logo">ToDo Application</a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item mx-auto">
-                        <a href="{% url 'home' %}" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item mx-auto">
-                        <a href="{% url 'about' %}" class="nav-link">About</a>
-                    </li>
-                    <li class="nav-item mx-auto">
-                        <a href="{% url 'contact' %}" class="nav-link">Contact</a>
-                    </li>
-                    {% if not request.user.is_authenticated %}
-                    <li class="nav-item mx-auto">
-                        <a href="{% url 'login' %}" class="nav-link">Login</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item mx-auto">
-                        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>        
-    </nav>
+        <div class="container">
+            <!-- FOR DEMO PURPOSE -->
+            <header class="text-center mb-5">
+                <h1 class="display-4 text-light">ToDoList Application</h1>
+                <p class="fst-italic text-light">made by Michal Pietrykowski</p>
+            </header>
+            
+            <div class="row">
+                <div class="col-xl-6 mx-auto mb-5">
+    
+                    <!-- MAIN CARD -->
+                    <div class="card rounded border-0 shadow-sm">
+                        <div class="card-body p-5">
+                            {% block content %}
+                            {% endblock %}
+                        </div>
+                    </div>
 
-    <!-- main -->
-    {% block main %}
-    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-    <!-- sticky navbar script -->
-    <script src="{% static 'todoapp/navbar.js' %}"></script>
 </body>
-</html>
 </html>

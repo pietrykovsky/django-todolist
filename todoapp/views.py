@@ -6,15 +6,14 @@ from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView, DeleteView, FormView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
 from .models import Task
-from .forms import UserForm, TaskForm
+from .forms import TaskForm
 
 # Create your views here.
-class HomeView(View):
+class HomeView(LoginRequiredMixin, View):
     template_name = 'todoapp/home.html'
     http_methods_names = ['get', 'post']
     def get(self, request):
@@ -26,7 +25,7 @@ class HomeView(View):
         context = {'form': form, 'tasks': tasks}
         return render(request, self.template_name, context)
 
-    @login_required
+    # @login_required
     def post(self, request):
         form = TaskForm(request.POST)
 
@@ -44,7 +43,7 @@ class TaskDetailView(LoginRequiredMixin ,DetailView):
 
 class TaskEditView(LoginRequiredMixin ,UpdateView):
     model = Task
-    fields = ['title']
+    fields = ['title', 'is_complete']
     context_object_name = 'form'
     template_name = 'todoapp/task-edit.html'
     success_url = reverse_lazy('home')
@@ -55,14 +54,6 @@ class TaskDeleteView(LoginRequiredMixin ,DeleteView):
 
     def get(self, request):
         return self.post(request)
-    
-# add informations about the author
-def about(request):
-    return render(request, 'todoapp/about.html')
-
-# add sending mail functionality
-def contact(request):
-    return render(request, 'todoapp/contact.html')
 
 class LoginView(LoginView):
     template_name = 'todoapp/login.html'
