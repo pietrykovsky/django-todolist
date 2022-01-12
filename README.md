@@ -4,6 +4,7 @@
 ## Features
 * task CRUD functionality
 * user authentication system
+* template-based interface styled with bootstrap
 
 ## Setup
 To get this repository, run the following command inside your terminal:
