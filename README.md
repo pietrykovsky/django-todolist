@@ -1,6 +1,7 @@
 # Preview
   django-todolist is a simple todo app built with Django.
   
+  ![Preview image](screenshots/preview.png)
 ## Features
 * task CRUD functionality
 * user authentication system
