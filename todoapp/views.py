@@ -8,6 +8,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.core.paginator import Paginator
 
 from .models import Task
 from .forms import TaskForm
@@ -23,11 +24,11 @@ class HomeView(LoginRequiredMixin, View):
 
     def get(self, request):
         form = TaskForm()
-        if request.user.is_authenticated:
-            tasks = Task.objects.filter(user=request.user)
-        else:
-            tasks = None
-        context = {'form': form, 'tasks': tasks}
+        tasks = Task.objects.filter(user=request.user)
+        paginator = Paginator(tasks, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {'form': form, 'tasks': page_obj}
         return render(request, self.template_name, context)
 
     def post(self, request):
